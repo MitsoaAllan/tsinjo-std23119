@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JDonationMapper {
-    public Donation toDomain(JDonation jDonation) {
-        return null;
-    }
+  public Donation toDomain(JDonation jDonation) {
+    return null;
+  }
 }

@@ -15,26 +15,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequiredArgsConstructor
 public class TsinjoController {
-    private final DonationRepository donationRepo;
-    private final HelpRepository helpRepo;
-    private final PaymentService paymentService;
+  private final DonationRepository donationRepo;
+  private final HelpRepository helpRepo;
+  private final PaymentService paymentService;
 
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("donations", donationRepo.findAllOrderedByDateDesc());
-        model.addAttribute("helps", helpRepo.findAllOrderedByDateDesc());
-        return "index";
-    }
+  @GetMapping("/")
+  public String home(Model model) {
+    model.addAttribute("donations", donationRepo.findAllOrderedByDateDesc());
+    model.addAttribute("helps", helpRepo.findAllOrderedByDateDesc());
+    return "index";
+  }
 
-    @PostMapping("/donate")
-    public String donate(@RequestParam String email,
-                         @RequestParam String pspPaymentId) {
-        Payment payment = new Payment();
-        payment.setPspType("ORANGE_MONEY");
-        payment.setPspPaymentId(pspPaymentId);
-        payment.setVerificationStatus(VerificationStatus.VERIFYING);
+  @PostMapping("/donate")
+  public String donate(@RequestParam String email, @RequestParam String pspPaymentId) {
+    Payment payment = new Payment();
+    payment.setPspType("ORANGE_MONEY");
+    payment.setPspPaymentId(pspPaymentId);
+    payment.setVerificationStatus(VerificationStatus.VERIFYING);
 
-        paymentService.processDonation(email, payment);
-        return "redirect:/";
-    }
+    paymentService.processDonation(email, payment);
+    return "redirect:/";
+  }
 }

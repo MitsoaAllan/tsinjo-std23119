@@ -12,14 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
-    private final DonationRepository donationRepo;
-    private final DonorRepository donorRepo;
+  private final DonationRepository donationRepo;
+  private final DonorRepository donorRepo;
 
-    public void processDonation(String donorEmail, Payment paymentRequest) {
-        Donor donor = donorRepo.findByEmail(donorEmail)
-                .orElseGet(() -> donorRepo.save(new Donor(donorEmail, "Nom à définir")));
+  public void processDonation(String donorEmail, Payment paymentRequest) {
+    Donor donor =
+        donorRepo
+            .findByEmail(donorEmail)
+            .orElseGet(() -> donorRepo.save(new Donor(donorEmail, "Nom à définir")));
 
-        Donation donation = new Donation(donor, paymentRequest, VerificationStatus.VERIFYING);
-        donationRepo.save(donation);
-    }
+    Donation donation = new Donation(donor, paymentRequest, VerificationStatus.VERIFYING);
+    donationRepo.save(donation);
+  }
 }
